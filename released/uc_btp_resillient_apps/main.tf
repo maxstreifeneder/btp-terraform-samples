@@ -78,24 +78,6 @@ resource "btp_subaccount_entitlement" "name" {
   subaccount_id = btp_subaccount.project.id
   service_name  = each.value.service_name
   plan_name     = each.value.plan_name
-<<<<<<< HEAD
-=======
-}
-
-resource "btp_subaccount_entitlement" "cicd" {
-  subaccount_id = btp_subaccount.project.id
-  service_name  = "cicd-app"
-  plan_name     = "free"
-  amount        = 1
-}
-
-
-resource "btp_subaccount_entitlement" "appstudio" {
-  subaccount_id = btp_subaccount.project.id
-  service_name  = "sapappstudio"
-  plan_name     = "free"
-  amount        = 1
->>>>>>> 144b4c3 (free tier & init 4033 mission)
 }
 
 ######################################################################
@@ -138,11 +120,7 @@ module "create_cf_service_instance_ems" {
   parameters = jsonencode(
     {
       "emname" : "tfe",
-<<<<<<< HEAD
       "namespace" : "tfe/bpem/em",
-=======
-      "namespace" : "tfe/bpem/em10",
->>>>>>> 144b4c3 (free tier & init 4033 mission)
       "version" : "1.1.0",
       "resources" : {
         "units" : "10"
@@ -188,11 +166,7 @@ module "create_cf_service_instance_hana_cloud" {
   source       = "../modules/cloudfoundry-service-instance/"
   cf_space_id  = module.cloudfoundry_space.id
   service_name = "hana-cloud"
-<<<<<<< HEAD
-  plan_name    = "hana"
-=======
   plan_name    = "hana-free"
->>>>>>> 144b4c3 (free tier & init 4033 mission)
   parameters   = jsonencode({ "data" : { "memory" : 30, "edition" : "cloud", "systempassword" : "Abcd1234", "whitelistIPs" : ["0.0.0.0/0"] } })
 }
 # hana
@@ -227,8 +201,6 @@ resource "btp_subaccount_subscription" "app" {
   app_name   = each.value.service_name
   plan_name  = each.value.plan_name
   depends_on = [btp_subaccount_entitlement.name]
-<<<<<<< HEAD
-=======
 }
 
 resource "btp_subaccount_subscription" "sapappstudio" {
@@ -259,5 +231,4 @@ resource "btp_subaccount_role_collection_assignment" "rolecollections" {
   user_name            = each.value.user
   role_collection_name = each.value.role_collection
   depends_on           = [btp_subaccount_subscription.app, btp_subaccount_entitlement.appstudio]
->>>>>>> 144b4c3 (free tier & init 4033 mission)
 }
