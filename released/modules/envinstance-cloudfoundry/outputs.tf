@@ -8,6 +8,16 @@ output "org_name" {
   description = "The org name of the Cloud Foundry environment instance."
 }
 
+output "user" {
+  value       = data.btp_whoami.orchestrator.id
+  description = "logged on user"
+}
+
+output "mail" {
+  value       = data.btp_whoami.orchestrator.email
+  description = "logged on user mail"
+}
+
 output "org_id" {
   value       = btp_subaccount_environment_instance.cloudfoundry.platform_id
   description = "The technical ID of the Cloud Foundry environment instance."
